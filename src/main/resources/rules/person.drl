@@ -1,0 +1,49 @@
+package rules;
+import five.agency.droolsdemo.model.Person;
+import five.agency.droolsdemo.model.Address;
+
+query "person with address in Croatia"
+    Person(address.country == "Croatia")
+end
+
+query "oldest person in Croatia"
+    $p: Person(address.country == "Croatia", $age: age)
+    not Person(age > $age, address.country == "Croatia")
+end
+
+
+rule "verify croatian exist"
+when
+    exists(Person(address.country=="Croatia"))
+then
+    System.out.println("Postoji osoba iz Hrvatske");
+end
+
+rule "oldest croatian"
+when
+    $p: Person(address.country == "Croatia", $age: age)
+    not Person(age > $age, address.country == "Croatia")
+then
+    System.out.println("Najstariji Hrvat ima " + $age + " godina!");
+end
+
+rule "print age"
+agenda-group "print all combinations"
+when
+    $p: Person(address.country == "Croatia", $age: age)
+    $p1: Person(address.country == "Croatia")
+then
+    System.out.println($age + " " + $p1.getAge() + " " + $p.getAddress().getCountry());
+end
+
+rule "property reactivity"
+agenda-group "reactivity"
+when
+    $p: Person(address.country == "France")
+    $p1: Person()
+then
+    System.out.println($p.getAddress().getCountry() + " ( " +  $p.getAge() + " ), " + $p1.getAddress().getCountry() + "( " + $p.getAge() + " )");
+    modify($p) {
+        getAddress().setCountry("Croatia");
+    }
+end

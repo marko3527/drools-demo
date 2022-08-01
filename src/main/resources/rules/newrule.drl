@@ -1,0 +1,9 @@
+package rules;
+dialect  "mvel"
+
+rule "always true-new"
+    when
+       $s: String()
+    then
+        System.out.println("Dodano pravilo se okinulo! " + $s);
+end

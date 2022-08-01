@@ -1,0 +1,8 @@
+package rules;
+
+rule "ruleafterdelete"
+    when
+        $s: String()
+    then
+        System.out.println("Zamijenjeno pravilo se okinulo! " + $s);
+end

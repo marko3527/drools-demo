@@ -1,0 +1,9 @@
+package rules;
+dialect  "mvel"
+
+rule "always true"
+    when
+       $s: String()
+    then
+        System.out.println($s);
+end

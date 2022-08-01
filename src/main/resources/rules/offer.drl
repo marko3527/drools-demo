@@ -1,0 +1,23 @@
+package rules;
+import five.agency.droolsdemo.model.Order;
+
+rule "HDFC"
+when
+order: Order(cardType=="HDFC" && price>10000);
+then
+order.setDiscount(15);
+end
+
+rule "ICICI"
+when
+order: Order(cardType=="ICICI" && price>10000);
+then
+order.setDiscount(8);
+end
+
+rule "DBS"
+when
+order: Order(cardType=="DBS" && price>10000)
+then
+order.setDiscount(10);
+end

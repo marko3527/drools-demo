@@ -1,0 +1,24 @@
+package rules;
+
+global java.util.List globalList
+import five.agency.droolsdemo.model.Person
+import five.agency.droolsdemo.model.Address
+
+rule "after adding new person"
+agenda-group "global"
+    when
+        Person(address.country == "USA")
+    then
+        System.out.println("Postoji osoba iz Amerike");
+end
+
+rule "global"
+salience 10
+agenda-group "global"
+    when
+    then
+        globalList.add(new Person("test", "test", new Address("", "", "", "USA"), 12));
+        insert(new Person("test", "test", new Address("", "", "", "USA"), 12));
+end
+
+
