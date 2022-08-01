@@ -10,6 +10,10 @@ import org.kie.internal.io.ResourceFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.io.File;
+import java.nio.file.Path;
+import java.util.List;
+
 @Component
 public class KieFileSystemUtil {
 
@@ -19,6 +23,16 @@ public class KieFileSystemUtil {
     private KieServices kieServices;
     @Autowired
     private KieContainer kieContainer;
+
+    public void addBatchOfRules(List<Path> rulePaths) {
+        rulePaths.forEach(rulePath -> kieFileSystem.write(ResourceFactory.newFileResource(rulePath.toFile())));
+        updateKieContainerVersion();
+    }
+
+    public void addNewRuleToSession(Path rulePath) {
+        kieFileSystem.write(ResourceFactory.newFileResource(rulePath.toFile()));
+        updateKieContainerVersion();
+    }
 
     public void addNewRuleToSession(String newRuleName) {
         kieFileSystem.write(ResourceFactory.newClassPathResource("rules/" + newRuleName));
@@ -37,6 +51,9 @@ public class KieFileSystemUtil {
 
     private void updateKieContainerVersion() {
         KieBuilder kieBuilder = kieServices.newKieBuilder(kieFileSystem);
+        if(kieBuilder.buildAll().getResults().hasMessages()) {
+            System.out.println("NISAM USPIO BUILDAT");
+        }
         kieBuilder.buildAll();
         kieContainer.updateToVersion(kieBuilder.getKieModule().getReleaseId());
     }

@@ -47,10 +47,10 @@ public class DroolsConfiguration {
     @Bean
     public KieFileSystem getKieFileSystem() throws IOException {
         KieFileSystem kieFileSystem = kieServices.newKieFileSystem();
-        kieFileSystem.write(ResourceFactory.newClassPathResource("rules/offer.drl"));
-        kieFileSystem.write(ResourceFactory.newClassPathResource("rules/person.drl"));
-        kieFileSystem.write(ResourceFactory.newClassPathResource("rules/global.drl"));
-        kieFileSystem.write(ResourceFactory.newClassPathResource("rules/stringrule.drl"));
+        //kieFileSystem.write(ResourceFactory.newClassPathResource("rules/offer.drl"));
+        //kieFileSystem.write(ResourceFactory.newClassPathResource("rules/person.drl"));
+        //kieFileSystem.write(ResourceFactory.newClassPathResource("rules/global.drl"));
+        //kieFileSystem.write(ResourceFactory.newClassPathResource("rules/stringrule.drl"));
         return kieFileSystem;
     }
 
